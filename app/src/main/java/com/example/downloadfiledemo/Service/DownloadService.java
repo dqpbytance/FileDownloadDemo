@@ -27,7 +27,7 @@ public class DownloadService extends Service {
 
     public DownLoadTask downLoadTask;
     private String downbloadurl;
-
+    private boolean ifPauseBefore=false;
     private DownloadListener listener = new DownloadListener() {
         @Override
         public void onProgress(int progress) {
@@ -55,6 +55,7 @@ public class DownloadService extends Service {
         @Override
         public void onPaused() {
             downLoadTask = null;
+            ifPauseBefore=true;
             Toast.makeText(DownloadService.this, "暂停下载", Toast.LENGTH_SHORT).show();
         }
 
@@ -120,6 +121,10 @@ public class DownloadService extends Service {
         }
 
         public void cancelDownload() {
+            if (ifPauseBefore){
+                stopForeground(true);
+                ifPauseBefore=false;
+            }
             if (downLoadTask != null) {
                 downLoadTask.CancelDownload();
                 if(downbloadurl!=null){
