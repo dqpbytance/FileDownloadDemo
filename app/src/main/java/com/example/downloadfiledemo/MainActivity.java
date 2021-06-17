@@ -29,7 +29,7 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "MainActivity";
-    private Button btn_download, btn_cancel, btn_pause;
+    private Button btn_download, btn_cancel, btn_pause,btn_delete;
     private DownloadService.DownloadBinder binder;
 
     //创建serviceConnection实例，这个实例会当调用bindservice的时候回调，并调用里面的
@@ -54,9 +54,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_download = findViewById(R.id.btn_download);
         btn_pause = findViewById(R.id.btn_pause);
         btn_cancel = findViewById(R.id.btn_cancel);
+        btn_delete=findViewById(R.id.btn_delete);
         btn_download.setOnClickListener(this);
         btn_pause.setOnClickListener(this);
         btn_cancel.setOnClickListener(this);
+        btn_delete.setOnClickListener(this);
 
         Intent intent = new Intent(MainActivity.this, DownloadService.class);
 
@@ -88,6 +90,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_cancel:
                 binder.cancelDownload();
+                break;
+            case R.id.btn_delete:
+                binder.deleteFile();
                 break;
             default:break;
         }

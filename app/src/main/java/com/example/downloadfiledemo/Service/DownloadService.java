@@ -127,30 +127,31 @@ public class DownloadService extends Service {
             }
             if (downLoadTask != null) {
                 downLoadTask.CancelDownload();
-                if(downbloadurl!=null){
-                    String fileName = downbloadurl.substring(downbloadurl.lastIndexOf("/"));
-                    String directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
-                    File file = new File(directory + fileName);
-                    if (file.exists()) {
-                        file.delete();
-                        Log.d("TAG", "cancelDownload: 文件删除");
-                    }
+                String fileName = downbloadurl.substring(downbloadurl.lastIndexOf("/"));
+                String directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
+                File file = new File(directory + fileName);
+                if (file.exists()) {
+                    file.delete();
+                    Toast.makeText(DownloadService.this,"残留文件已经删除",Toast.LENGTH_SHORT).show();
                     downbloadurl=null;
                 }
             }
-//            else if (downbloadurl != null) {
-//                //取消下载时将文件删除并将通知取消
-//                String fileName = downbloadurl.substring(downbloadurl.lastIndexOf("/"));
-//                String directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
-//                File file = new File(directory + fileName);
-//                if (file.exists()) {
-//                    file.delete();
-//                }
-//                //将通知取消
-//                getNotificaionManager().cancel(1);
-//                stopForeground(true);
-////                Toast.makeText(DownloadService.this, "取消了...", Toast.LENGTH_SHORT).show();
-//            }
+        }
+        public void deleteFile(){
+            if (downLoadTask!=null){
+                cancelDownload();
+            }
+            if(downbloadurl!=null){
+                Log.d("qqqqq", "deleteFile: ");
+                String fileName = downbloadurl.substring(downbloadurl.lastIndexOf("/"));
+                String directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath();
+                File file = new File(directory + fileName);
+                if (file.exists()) {
+                    file.delete();
+                    Toast.makeText(DownloadService.this,"文件已经删除",Toast.LENGTH_SHORT).show();
+                    downbloadurl=null;
+                }
+            }
         }
 
     }
